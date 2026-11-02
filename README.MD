@@ -52,5 +52,5 @@ The tests extract the actual callback definitions from the notebook and compile 
 
 ## License
 
-[GNU General Public License v3.0](LICENSE).
+[MIT](LICENSE).
 
