@@ -130,5 +130,30 @@ class StopCallbackTests(unittest.TestCase):
         np.testing.assert_array_equal(results[0], results[1])
 
 
+class SignalArrayTests(unittest.TestCase):
+    def test_margin_signal_arrays_are_writable_under_copy_on_write(self):
+        # pandas 3 Copy-on-Write returns read-only arrays from Series.values.
+        class ReadOnlySeries:
+            def __init__(self, values):
+                self.values = values
+                self.values.setflags(write=False)
+
+            def copy(self):
+                return ReadOnlySeries(self.values.copy())
+
+        lines = [line.strip() for cell in NOTEBOOK["cells"] if cell["cell_type"] == "code"
+                 and "apply_margin(" in "".join(cell.get("source", []))
+                 for line in "".join(cell["source"]).splitlines()
+                 if line.strip().startswith("long_signals =")]
+        self.assertGreaterEqual(len(lines), 3)
+        for line in lines:
+            with self.subTest(line=line):
+                namespace = {"long_entries": ReadOnlySeries(np.array([True, False, False]))}
+                exec(line, namespace)
+                signals = namespace["long_signals"]
+                self.assertTrue(signals.flags.writeable)
+                CALLBACKS["apply_margin"](np.array([100.0, 99.0, 98.0]), signals, 0.01)
+
+
 if __name__ == "__main__":
     unittest.main()

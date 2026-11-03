@@ -2,6 +2,8 @@
 
 A Jupyter research notebook for exploring vectorized trading signals, historical backtests, and parameter searches with VectorBT and Optuna.
 
+This is research and educational code, not financial advice.
+
 **[Open the notebook](VectorBT%20Backtest.ipynb)**
 
 ## Notebook guide
@@ -21,11 +23,16 @@ A Jupyter research notebook for exploring vectorized trading signals, historical
 ## Run the notebook
 
 1. Clone this repository and open it as your working directory.
-2. Use a Jupyter environment with NumPy, pandas, Numba, VectorBT, Optuna, and the Yahoo Finance integration required by `vbt.YFData`.
+2. In a Python 3.12 environment with Jupyter, install the notebook dependencies:
+
+   ```bash
+   python -m pip install -r requirements.txt
+   ```
+
 3. Open `VectorBT Backtest.ipynb` and run the import, data, and signal cells before the backtest sections.
 4. Review each section's cash, position size, fees, stop settings, and optimization budget before executing it.
 
-The complete notebook environment is not locked. `requirements-checks.txt` pins only the dependencies for the focused callback checks below; it does not install VectorBT, pandas, Optuna, or Yahoo Finance. Validate compatibility separately before running the full notebook.
+`requirements.txt` pins NumPy, pandas, Numba, VectorBT, Optuna, and yfinance (used by `vbt.YFData`) at versions with which every code cell ran offline against a synthetic price series; the Yahoo download itself was not exercised. `requirements-checks.txt` separately pins only the dependencies for the focused callback checks below.
 
 ## Experiment controls
 
@@ -48,7 +55,7 @@ python -m pip install -r requirements-checks.txt
 python -m unittest discover -s tests -v
 ```
 
-The tests extract the actual callback definitions from the notebook and compile them with Numba in nopython mode. They cover long/short profit and loss, threshold boundaries, invalid/flat contexts, position-size independence, and repeatable benchmark inputs. CI uses Python 3.11 and the same pinned test dependencies. No VectorBT installation, price download, portfolio simulation, or Optuna search is performed by these checks; they do not establish profitable trading performance or full-notebook compatibility.
+The tests extract the actual callback definitions from the notebook and compile them with Numba in nopython mode. They cover long/short profit and loss, threshold boundaries, invalid/flat contexts, position-size independence, repeatable benchmark inputs, and writable signal arrays for the margin filter. CI uses Python 3.11 and the same pinned test dependencies. No VectorBT installation, price download, portfolio simulation, or Optuna search is performed by these checks; they do not establish profitable trading performance or full-notebook compatibility.
 
 ## License
 
