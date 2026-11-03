@@ -2,6 +2,8 @@
 
 A Jupyter research notebook for exploring vectorized trading signals, historical backtests, and parameter searches with VectorBT and Optuna.
 
+This is research and educational code, not financial advice.
+
 **[Open the notebook](VectorBT%20Backtest.ipynb)**
 
 ## Notebook guide
