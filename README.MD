@@ -48,7 +48,7 @@ python -m pip install -r requirements-checks.txt
 python -m unittest discover -s tests -v
 ```
 
-The tests extract the actual callback definitions from the notebook and compile them with Numba in nopython mode. They cover long/short profit and loss, threshold boundaries, invalid/flat contexts, position-size independence, and repeatable benchmark inputs. CI uses Python 3.11 and the same pinned test dependencies. No VectorBT installation, price download, portfolio simulation, or Optuna search is performed by these checks; they do not establish profitable trading performance or full-notebook compatibility.
+The tests extract the actual callback definitions from the notebook and compile them with Numba in nopython mode. They cover long/short profit and loss, threshold boundaries, invalid/flat contexts, position-size independence, repeatable benchmark inputs, and writable signal arrays for the margin filter. CI uses Python 3.11 and the same pinned test dependencies. No VectorBT installation, price download, portfolio simulation, or Optuna search is performed by these checks; they do not establish profitable trading performance or full-notebook compatibility.
 
 ## License
 
